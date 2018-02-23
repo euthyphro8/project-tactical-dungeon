@@ -15,6 +15,9 @@
 		9F015131202DFD6100419F05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F01512F202DFD6100419F05 /* Main.storyboard */; };
 		9F015133202DFD6100419F05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F015132202DFD6100419F05 /* Assets.xcassets */; };
 		9F015136202DFD6100419F05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F015134202DFD6100419F05 /* LaunchScreen.storyboard */; };
+		9F5CDBF6203490E400D0F31B /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5CDBF5203490E400D0F31B /* Entity.swift */; };
+		9F60856420407647003E1B1F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60856320407647003E1B1F /* Game.swift */; };
+		9F60856620407659003E1B1F /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60856520407659003E1B1F /* Map.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		9F015132202DFD6100419F05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F015135202DFD6100419F05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F015137202DFD6100419F05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F5CDBF5203490E400D0F31B /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		9F60856320407647003E1B1F /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		9F60856520407659003E1B1F /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,7 @@
 		9F015124202DFD6100419F05 /* Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0 */ = {
 			isa = PBXGroup;
 			children = (
+				9F5CDBF5203490E400D0F31B /* Entity.swift */,
 				9F015125202DFD6100419F05 /* AppDelegate.swift */,
 				9F015127202DFD6100419F05 /* GameScene.sks */,
 				9F015129202DFD6100419F05 /* Actions.sks */,
@@ -69,6 +76,8 @@
 				9F015132202DFD6100419F05 /* Assets.xcassets */,
 				9F015134202DFD6100419F05 /* LaunchScreen.storyboard */,
 				9F015137202DFD6100419F05 /* Info.plist */,
+				9F60856320407647003E1B1F /* Game.swift */,
+				9F60856520407659003E1B1F /* Map.swift */,
 			);
 			path = Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0;
 			sourceTree = "<group>";
@@ -147,8 +156,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F5CDBF6203490E400D0F31B /* Entity.swift in Sources */,
+				9F60856420407647003E1B1F /* Game.swift in Sources */,
 				9F01512C202DFD6100419F05 /* GameScene.swift in Sources */,
 				9F01512E202DFD6100419F05 /* GameViewController.swift in Sources */,
+				9F60856620407659003E1B1F /* Map.swift in Sources */,
 				9F015126202DFD6100419F05 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
