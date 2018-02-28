@@ -7,3 +7,40 @@
 //
 
 import Foundation
+import SpriteKit
+
+class Map{
+    // 64p nodes
+    let Background = SKSpriteNode()
+    var Nodes = [MapNode]()
+    
+    
+//    func getNodeType(location:CGPoint){
+//        for aNode in nodes{
+//            if(aNode.loc == location){
+//
+//            }
+//        }
+//    }
+    
+//    func setNodeType(node:MapNode , type:MapNode.occupiedType){
+//
+//    }
+    
+    
+}
+
+struct MapNode{
+    enum occupiedType{
+        case nothing ,enemy ,friend , blockedTile
+    }
+    var TileOc:occupiedType;
+    let Loc:CGPoint
+    
+    init(location:CGPoint , tileOccupiedBy tileOc:occupiedType){
+        Loc = location
+        TileOc = tileOc
+    }
+    
+    
+}
