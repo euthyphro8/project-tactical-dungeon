@@ -13,16 +13,35 @@ import GameplayKit
 public class Entity {
     
     let Sprite:SKSpriteNode
+    let Max_Health:Int
+    var Health:Int
+    let Attack:Int
+    let Defense:Int
     
-    init(sprite:SKSpriteNode) {
+    
+    init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat) {
         Sprite = sprite
-        Sprite.position = CGPoint(x:50,y:50)
+        Sprite.position = CGPoint(x:x,y:y)
+        Max_Health = 100
+        Health = Max_Health
+        Attack = 10
+        Defense = 10
+    }
+    init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) {
+        Sprite = sprite
+        Sprite.position = CGPoint(x:x,y:y)
+        Sprite.scale(to: CGSize(width: w, height: h))
+        Max_Health = 100
+        Health = Max_Health
+        Attack = 10
+        Defense = 10
     }
     
-    func Update() {
-        
+    func Damage(Damage:Int)->Bool {
+        let dead = Health - Damage <= 0
+        Health = dead ? 0 : Health - Damage
+        return dead
     }
-    
 }
 
 

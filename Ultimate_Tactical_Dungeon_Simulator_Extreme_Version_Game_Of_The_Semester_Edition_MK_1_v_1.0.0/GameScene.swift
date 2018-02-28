@@ -13,56 +13,30 @@ class GameScene: SKScene {
     // adding something new to commit
     
     var entities = [GKEntity]()
-    var ents = [Entity]()
     var graphs = [String : GKGraph]()
+    var game:Game = Game()
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
     override func sceneDidLoad() {
-
         self.lastUpdateTime = 0
-        let player:Entity = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "floor"))))
-            
-        
-        ents.append(player)
-        
-        
-        addChild(player.Sprite)
-        
+        game.Add_Children(GameScene: self)
     }
     
     
     func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
+        game.Touch_Down(atPoint : pos)
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
-        
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
