@@ -11,7 +11,7 @@ import SpriteKit
 
 class Map{
     // 64p nodes
-    let Background = SKSpriteNode(SKTexture())
+    let Background = SKSpriteNode(texture:SKTexture(image:#imageLiteral(resourceName: "pizza")))
     var Nodes = [[MapNode]]()
     
     
