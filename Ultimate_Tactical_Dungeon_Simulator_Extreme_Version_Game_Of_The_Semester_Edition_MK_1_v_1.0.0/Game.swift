@@ -34,11 +34,15 @@ public class Game {
     
     
     func Touch_Down(atPoint pos : CGPoint) {
+        print(pos)
         let a = CGPoint(x:Player.Sprite.position.x,y:Player.Sprite.position.y)
         let b = CGPoint(x:Player.Sprite.position.x + Player.Sprite.size.width, y:Player.Sprite.position.y + Player.Sprite.size.height)
         if Is_In_Bounds(a: a, b: b, pos: pos) {
             Player.Sprite.position.x += 32
         }
+        
+//        print("Player: " + String(a));
+//        print("Touch: " + String(a));
     }
     
     func Is_In_Bounds(a: CGPoint, b: CGPoint, pos: CGPoint)->Bool {
