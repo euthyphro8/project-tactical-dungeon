@@ -12,7 +12,7 @@ import GameplayKit
 
 public class Game {
     
-    static let TILE_SIZE = 64
+    static let TILE_SIZE:CGFloat = 64
     
     var Entities = [Entity]()
     let Player:Entity;
@@ -21,6 +21,7 @@ public class Game {
     init(){
         Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "player_tmp"))), x:0, y:0, w:64, h:64)
         Entities.append(Player)
+        //Entities.append(new Entity())
     }
     
     
@@ -34,12 +35,15 @@ public class Game {
     
     
     func Touch_Down(atPoint pos : CGPoint) {
-        print(pos)
-        let a = CGPoint(x:Player.Sprite.position.x,y:Player.Sprite.position.y)
-        let b = CGPoint(x:Player.Sprite.position.x + Player.Sprite.size.width, y:Player.Sprite.position.y + Player.Sprite.size.height)
-        if Is_In_Bounds(a: a, b: b, pos: pos) {
-            Player.Sprite.position.x += 32
+        for r in Entity.Relative.Cases() {
+            let bounds = Player.Get_Bounds(pos:r);
+            if Is_In_Bounds(a: bounds.lower_left, b: bounds.upper_right, pos: pos) {
+                
+                Player.Move(dir: r);
+                break;
+            }
         }
+        
         
 //        print("Player: " + String(a));
 //        print("Touch: " + String(a));
@@ -50,5 +54,15 @@ public class Game {
         let betweenY:Bool = (pos.y > a.y && pos.y < b.y) || (pos.y > b.y && pos.y < a.y)
         return betweenX && betweenY
     }
+    func Get_Entity_At_Pos(pos: CGPoint)->Entity{
+        for e in  Entities {
+            let bounds = e.Get_Bounds(pos: Entity.Relative.CENTER)
+            if(Is_In_Bounds(a: bounds.lower_left, b: bounds.upper_right, pos: pos)) {
+                return e;
+            }
+        }
+    }
     
 }
+
+
