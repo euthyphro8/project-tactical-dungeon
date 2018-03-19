@@ -18,6 +18,7 @@ public class Game {
     let Player:Entity;
     let GameMap:Map;
     let SelectedTile:SKSpriteNode;
+    var Actions:[SKAction]
     
     
     init(){
@@ -35,6 +36,7 @@ public class Game {
 //        Player.Sprite.position.y = GameMap.findTile(tileX:1, tileY: 1).Location.y
         Entities.append(Player)
         //Entities.append(new Entity())
+        Actions = [SKAction]()
     }
     
     
@@ -52,10 +54,12 @@ public class Game {
         //GameMap.Background.position.x+=100
         let tileLoc:CGPoint = GameMap.findTile(location: pos).Location
         //let moveAction = SKAction.move
-        //let moveActionX = SKAction.moveTo(x: tileLoc.x, duration: 0.0)
-        //let moveActionY = SKAction.moveTo(y: tileLoc.y, duration: 0.0)
-        //SelectedTile.run(moveActionX)
-        //SelectedTile.run(moveActionY)
+        let moveActionX = SKAction.moveTo(x: tileLoc.x, duration: 0.1)
+        let moveActionY = SKAction.moveTo(y: tileLoc.y, duration: 0.1)
+        Actions.append(moveActionX)
+        Actions.append(moveActionY)
+        SelectedTile.run(moveActionX)
+        SelectedTile.run(moveActionY)
        // SelectedTile.action
         //SelectedTile.position = SelectedTile.position.applying(CGAffineTransform(translationX:(tileLoc.x-SelectedTile.position.x),y:(tileLoc.y-SelectedTile.position.y)))
         //[SelectedTile .runAction[SKAction .moveTo(x: tileLoc.x, duration: 0.0)] ]
