@@ -26,21 +26,12 @@ public class Game {
         GameMap.Background.zPosition = 0
         SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
         SelectedTile.zPosition = 1
-        SelectedTile.position = GameMap.findTile(tileX:1,tileY:1).Location
-        
-        //playerStartLoc
-        
+        SelectedTile.position = GameMap.findTile(tileX:1,tileY:1).Location        
         Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "player_tmp"))), x:GameMap.findTile(tileX:1, tileY: 1).Location.x, y:GameMap.findTile(tileX:1, tileY: 1).Location.y, w:64, h:64)
         Player.Sprite.zPosition = 2
-//        Player.Sprite.position.x = GameMap.findTile(tileX:1, tileY: 1).Location.x
-//        Player.Sprite.position.y = GameMap.findTile(tileX:1, tileY: 1).Location.y
         Entities.append(Player)
-        //Entities.append(new Entity())
         Actions = [SKAction]()
     }
-    
-    
-    
     func Add_Children(GameScene:SKScene) {
         GameScene.addChild(GameMap.Background)
         GameScene.addChild(SelectedTile)
@@ -50,40 +41,61 @@ public class Game {
     }
     
     
-    func Touch_Down(atPoint pos : CGPoint) {
-        //GameMap.Background.position.x+=100
-        let tileLoc:CGPoint = GameMap.findTile(location: pos).Location
-        //let moveAction = SKAction.move
-        let moveActionX = SKAction.moveTo(x: tileLoc.x, duration: 0.1)
-        let moveActionY = SKAction.moveTo(y: tileLoc.y, duration: 0.1)
+    func Update() {
+        //Run the gui actions
+        for act in game.Actions{
+            game.SelectedTile.run(act)
+        }
+        //Run the entity actions
+        for e in Entities {
+            e.Update();
+        }
+    }
+    func Move_Selection(to: CGPoint) {
+        let moveActionX = SKAction.moveTo(x: to.x, duration: 0.1)
+        let moveActionY = SKAction.moveTo(y: to.y, duration: 0.1)
         Actions.append(moveActionX)
         Actions.append(moveActionY)
-        SelectedTile.run(moveActionX)
-        SelectedTile.run(moveActionY)
-       // SelectedTile.action
-        //SelectedTile.position = SelectedTile.position.applying(CGAffineTransform(translationX:(tileLoc.x-SelectedTile.position.x),y:(tileLoc.y-SelectedTile.position.y)))
-        //[SelectedTile .runAction[SKAction .moveTo(x: tileLoc.x, duration: 0.0)] ]
-        //[SelectedTile runAction[SKAction moveTo : newPosition duration 0.0]]
-//        SelectedTile.position.x+=(tileLoc.x-SelectedTile.position.x)
-//        SelectedTile.position.y+=(tileLoc.y-SelectedTile.position.y)
-        SelectedTile.physicsBody?.isDynamic = true
-        SelectedTile.position.x = tileLoc.x
-        SelectedTile.position.y = tileLoc.y
-        //GameScene.addChild(SelectedTile)
-        print("(Game)\(tileLoc)")
-        print("(Game)\(SelectedTile.position)")
-//        for r in Entity.Relative.Cases() {
-//            let bounds = Player.Get_Bounds(pos:r);
-//            if Is_In_Bounds(a: bounds.lower_left, b: bounds.upper_right, pos: pos) {
-//
-//                Player.Move(dir: r);
-//                break;
-//            }
-//        }
-        
-        
-//        print("Player: " + String(a));
-//        print("Touch: " + String(a));
+    }
+    func Touch_Down(atPoint pos : CGPoint) {
+        let tile:MapNode = GameMap.findTile(location: pos)
+        let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
+        Move_Selection(to: tile.Location);
+
+        switch tile.TileOc {
+            case MapNode.occupiedType.nothing:
+                if(ptile.TileX == tile.TileX) {
+                    if(ptile.TileY + 1 == tile.TileY) {
+                        tile.TileOC = MapNode.occupiedType.friend;
+                        pTile.TileOC = MapNode.occupiedType.nothing;
+                        Player.Move(dir: Entity.Relative.NORTH);
+                    }
+                    else if(ptile.TileY - 1 == tile.TileY) {
+                        tile.TileOC = MapNode.occupiedType.friend;
+                        pTile.TileOC = MapNode.occupiedType.nothing;
+                        Player.Move(dir: Entity.Relative.SOUTH);
+                    }
+                }
+                else if(ptile.TileY == tile.TileY) {
+                    if(ptile.TileX + 1 == tile.TileX) {
+                        tile.TileOC = MapNode.occupiedType.friend;
+                        pTile.TileOC = MapNode.occupiedType.nothing;
+                        Player.Move(dir: Entity.Relative.EAST);
+                    }
+                    else if(ptile.TileX - 1 == tile.TileX) {
+                        tile.TileOC = MapNode.occupiedType.friend;
+                        pTile.TileOC = MapNode.occupiedType.nothing;
+                        Player.Move(dir: Entity.Relative.WEST);
+                    }
+                }
+                break
+            case MapNode.occupiedType.enemy:
+                break
+            case MapNode.occupiedType.friend:
+                break
+            case MapNode.occupiedType.blockedtile:
+                break
+        }
     }
     
     func Is_In_Bounds(a: CGPoint, b: CGPoint, pos: CGPoint)->Bool {
@@ -91,15 +103,14 @@ public class Game {
         let betweenY:Bool = (pos.y > a.y && pos.y < b.y) || (pos.y > b.y && pos.y < a.y)
         return betweenX && betweenY
     }
-    func Get_Entity_At_Pos(pos: CGPoint)->Entity{
+    func Get_Entity_At_Pos(pos: CGPoint)->Entity?{
         for e in  Entities {
             let bounds = e.Get_Bounds(pos: Entity.Relative.CENTER)
             if(Is_In_Bounds(a: bounds.lower_left, b: bounds.upper_right, pos: pos)) {
                 return e;
             }
         }
-        //shouldn't make it here I think
-        return Entities[0];
+        return nil;
     }
     
 }

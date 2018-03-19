@@ -12,21 +12,20 @@ import GameplayKit
 
 public class Entity {
     
+    enum Relative : EnumCollection {
+        case CENTER
+        case NORTH
+        case EAST
+        case SOUTH
+        case WEST
+    }
     let Sprite:SKSpriteNode
     let Max_Health:Int
     var Health:Int
     let Attack:Int
     let Defense:Int
+    var Actions:[SKAction]
     
-    
-    init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat) {
-        Sprite = sprite
-        Sprite.position = CGPoint(x:x,y:y)
-        Max_Health = 100
-        Health = Max_Health
-        Attack = 10
-        Defense = 10
-    }
     init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) {
         Sprite = sprite
         Sprite.position = CGPoint(x:x,y:y)
@@ -35,22 +34,50 @@ public class Entity {
         Health = Max_Health
         Attack = 10
         Defense = 10
+        Actions = [SKAction]()
     }
     
-    enum Relative : EnumCollection {
-        case CENTER
-        case NORTH
-        case EAST
-        case SOUTH
-        case WEST
+
+    func Update() {
+        for act in game.Actions{
+            game.SelectedTile.run(act)
+        }
     }
-    
+
+
+
+    func Damage(Damage:Int)->Bool {
+        let dead = Health - Damage <= 0
+        Health = dead ? 0 : Health - Damage
+        return dead
+    }
+    func Move(dir:Relative) {
+        switch dir {
+            case Relative.CENTER:
+                break
+            case Relative.NORTH:
+                let moveAction = SKAction.moveTo(y: Sprite.position.y + Game.TILE_SIZE, duration: 0.1)
+                Actions.append(moveAction)
+                break
+            case Relative.EAST:
+                let moveAction = SKAction.moveTo(x: Sprite.position.x + Game.TILE_SIZE, duration: 0.1)
+                Actions.append(moveAction)
+                break
+            case Relative.SOUTH:
+                let moveAction = SKAction.moveTo(y: Sprite.position.y - Game.TILE_SIZE, duration: 0.1)
+                Actions.append(moveAction)
+                break
+            case Relative.WEST:
+                let moveAction = SKAction.moveTo(x: Sprite.position.x - Game.TILE_SIZE, duration: 0.1)
+                Actions.append(moveAction)
+                break
+            }
+    }
     func Get_Bounds(pos:Relative)->(lower_left:CGPoint, upper_right:CGPoint) {
         var x0:CGFloat = 1
         var y0:CGFloat = 1
         var x1:CGFloat = 1
         var y1:CGFloat = 1
-        
         switch pos {
             case Relative.CENTER:
                 x0 = -1
@@ -83,35 +110,10 @@ public class Entity {
                 y1 = 1
                 break
         }
-        
         let a = CGPoint(x:Sprite.position.x + ((Sprite.size.width / 2) * x0), y:Sprite.position.y + ((Sprite.size.height / 2) * y0))
         let b = CGPoint(x:Sprite.position.x + ((Sprite.size.width / 2) * x1), y:Sprite.position.y + ((Sprite.size.height / 2) * y1))
         return (a, b)
     }
-    func Damage(Damage:Int)->Bool {
-        let dead = Health - Damage <= 0
-        Health = dead ? 0 : Health - Damage
-        return dead
-    }
-    func Move(dir:Relative) {
-        switch dir {
-            case Relative.CENTER:
-                break
-            case Relative.NORTH:
-                Sprite.position.y += Game.TILE_SIZE
-                break
-            case Relative.EAST:
-                Sprite.position.x += Game.TILE_SIZE
-                break
-            case Relative.SOUTH:
-                Sprite.position.y -= Game.TILE_SIZE
-                break
-            case Relative.WEST:
-                Sprite.position.x -= Game.TILE_SIZE
-                break
-            }
-    }
-    
 }
 
 protocol EnumCollection : Hashable {}
