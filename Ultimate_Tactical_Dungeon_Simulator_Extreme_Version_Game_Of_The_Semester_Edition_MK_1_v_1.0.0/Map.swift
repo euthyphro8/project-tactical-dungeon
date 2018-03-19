@@ -11,39 +11,67 @@ import SpriteKit
 
 class Map{
     // 64p nodes
-    let Background = SKSpriteNode(texture:SKTexture(image:#imageLiteral(resourceName: "pizza")))
+    var Background:SKSpriteNode
     var Nodes = [[MapNode]]()
+    let XSize:Int
+    let YSize:Int
+    let Width:CGFloat
+    let Height:CGFloat
     
+    init(background:SKSpriteNode, xSize:Int, ySize:Int, width:CGFloat, height:CGFloat){
+        Background = background
+        background.position = CGPoint(x:CGFloat(0),y:CGFloat(0))
+        XSize = xSize
+        YSize = ySize
+        Width = width
+        Height = height
+        initNodes()
+    }
     
-    func initNodes(xSize:Int, ySize:Int){
-        
-        for i in 0...xSize {
-            for j in 0...ySize{
+    func initNodes(){
+        for i in 0...XSize {
+            for j in 0...YSize{
                 var point = CGPoint()
-                point.x = CGFloat(i*64)
-                point.y = CGFloat(j*64)
-                Nodes.append([MapNode(location:point,tileOccupiedBy:MapNode.occupiedType.nothing)])
+                point.x = CGFloat(i*64)-(Width/2)
+                point.y = CGFloat(j*64)-(Height/2)
+                Nodes.append([MapNode(x:i-(YSize/2),y:j-(XSize/2),tileOccupiedBy:MapNode.occupiedType.nothing)])
             }
         }
 //        Background=SkSpriteNode()
         
     }
     
-    func getNodeType(location:CGPoint) -> MapNode.occupiedType{
-        for aNodeA in Nodes{
-            for aNode in aNodeA{
-                    if(aNode.Loc == location){
-                        return aNode.TileOc
+    
+    func findTile(tileX:Int,tileY:Int)->MapNode{
+        for nodeA in Nodes{
+            if nodeA[0].TileY == tileY{
+                for node in nodeA{
+                    if (tileX == node.TileX){
+                        
+                        print("(Map)xPos:\(tileX),yPos:\(tileY))")
+                        
+                        print("(Map)TileX:\(node.TileX),TileY:\(node.TileY))")
+                        return node
+                    }
                 }
             }
         }
-        //if past this point something is wrong
-        return MapNode.occupiedType.blockedTile
+        //shouldn't make it this far...
+        return Nodes[tileX][tileY]
+    }
+    func findTile(location:CGPoint)->MapNode{
+      //  let xPos =
+        let xPos = Int((location.x/64>=0) ? (location.x/64).rounded(.up) : (location.x/64).rounded(.down))
+
+        let yPos = Int((location.y/64>=0) ? (location.y/64).rounded(.up) : (location.y/64).rounded(.down))
+        return findTile(tileX:xPos,tileY:yPos)
+        
     }
     
-//    func setNodeType(node:MapNode , type:MapNode.occupiedType){
-//
-//    }
+    func getNodeType(point:CGPoint) -> MapNode.occupiedType{
+        let tile = findTile(location:point)
+        return tile.TileOc
+    }
     
     
 }
@@ -53,11 +81,15 @@ class MapNode{
         case nothing ,enemy ,friend , blockedTile
     }
     var TileOc:occupiedType;
-    let Loc:CGPoint
-    
-    init(location:CGPoint , tileOccupiedBy tileOc:occupiedType = occupiedType.nothing){
-        Loc = location
+    let TileX:Int
+    let TileY:Int
+    let Location:CGPoint
+    init(x:Int, y:Int, tileOccupiedBy tileOc:occupiedType = occupiedType.nothing){
+        TileX=x
+        TileY=y
+        Location = CGPoint(x:((x>=0) ? CGFloat(TileX*64-32) : CGFloat(TileX*64+32)),y:((y>=0) ? CGFloat(TileY*64-32) : CGFloat(TileY*64+32)))
         TileOc = tileOc
+        
     }
     
     
