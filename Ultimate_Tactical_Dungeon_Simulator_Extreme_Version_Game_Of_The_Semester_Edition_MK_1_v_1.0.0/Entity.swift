@@ -44,8 +44,6 @@ public class Entity {
         }
     }
 
-
-
     func Damage(Damage:Int)->Bool {
         let dead = Health - Damage <= 0
         Health = dead ? 0 : Health - Damage
