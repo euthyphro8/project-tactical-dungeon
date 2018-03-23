@@ -43,8 +43,8 @@ public class Game {
     
     func Update() {
         //Run the gui actions
-        for act in game.Actions{
-            game.SelectedTile.run(act)
+        for act in Actions{
+            SelectedTile.run(act)
         }
         //Run the entity actions
         for e in Entities {
@@ -61,39 +61,42 @@ public class Game {
         let tile:MapNode = GameMap.findTile(location: pos)
         let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
         Move_Selection(to: tile.Location);
-
+        
         switch tile.TileOc {
-            case MapNode.occupiedType.nothing:
+            case OccupiedType.nothing:
                 if(ptile.TileX == tile.TileX) {
-                    if(ptile.TileY + 1 == tile.TileY) {
-                        tile.TileOC = MapNode.occupiedType.friend;
-                        pTile.TileOC = MapNode.occupiedType.nothing;
+//                    if(ptile.TileY == -1 && tile.TileY == 1||ptile.TileY == 1 && tile.TileY == -1){
+//
+//                    }
+                    if(ptile.TileY + 1 == tile.TileY || (ptile.TileY == -1 && tile.TileY == 1)) {
+                        tile.TileOc = OccupiedType.friend;
+                        ptile.TileOc = OccupiedType.nothing;
                         Player.Move(dir: Entity.Relative.NORTH);
                     }
-                    else if(ptile.TileY - 1 == tile.TileY) {
-                        tile.TileOC = MapNode.occupiedType.friend;
-                        pTile.TileOC = MapNode.occupiedType.nothing;
+                    else if(ptile.TileY - 1 == tile.TileY || (ptile.TileY == 1 && tile.TileY == -1)) {
+                        tile.TileOc = OccupiedType.friend;
+                        ptile.TileOc = OccupiedType.nothing;
                         Player.Move(dir: Entity.Relative.SOUTH);
                     }
                 }
                 else if(ptile.TileY == tile.TileY) {
-                    if(ptile.TileX + 1 == tile.TileX) {
-                        tile.TileOC = MapNode.occupiedType.friend;
-                        pTile.TileOC = MapNode.occupiedType.nothing;
+                    if(ptile.TileX + 1 == tile.TileX || (ptile.TileX == -1 && tile.TileX == 1)) {
+                        tile.TileOc = OccupiedType.friend;
+                        ptile.TileOc = OccupiedType.nothing;
                         Player.Move(dir: Entity.Relative.EAST);
                     }
-                    else if(ptile.TileX - 1 == tile.TileX) {
-                        tile.TileOC = MapNode.occupiedType.friend;
-                        pTile.TileOC = MapNode.occupiedType.nothing;
+                    else if(ptile.TileX - 1 == tile.TileX || (ptile.TileX == 1 && tile.TileX == -1)) {
+                        tile.TileOc = OccupiedType.friend;
+                        ptile.TileOc = OccupiedType.nothing;
                         Player.Move(dir: Entity.Relative.WEST);
                     }
                 }
                 break
-            case MapNode.occupiedType.enemy:
+            case OccupiedType.enemy:
                 break
-            case MapNode.occupiedType.friend:
+            case OccupiedType.friend:
                 break
-            case MapNode.occupiedType.blockedtile:
+            case OccupiedType.blockedTile:
                 break
         }
     }

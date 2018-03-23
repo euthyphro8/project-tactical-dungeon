@@ -70,10 +70,7 @@ class GameScene: SKScene {
             entity.update(deltaTime: dt)
         }
         
-        //do game Actions
-        for act in game.Actions{
-            game.SelectedTile.run(act)
-        }
+       game.Update()
         
         self.lastUpdateTime = currentTime
     }

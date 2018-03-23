@@ -34,22 +34,17 @@ class Map{
                 var point = CGPoint()
                 point.x = CGFloat(i*64)-(Width/2)
                 point.y = CGFloat(j*64)-(Height/2)
-                Nodes.append([MapNode(x:i-(YSize/2),y:j-(XSize/2),tileOccupiedBy:MapNode.occupiedType.nothing)])
+                Nodes.append([MapNode(x:i-(YSize/2),y:j-(XSize/2),tileOccupiedBy:OccupiedType.nothing)])
             }
         }
-//        Background=SkSpriteNode()
-        
     }
-    
     
     func findTile(tileX:Int,tileY:Int)->MapNode{
         for nodeA in Nodes{
             if nodeA[0].TileY == tileY{
                 for node in nodeA{
                     if (tileX == node.TileX){
-                        
-                        print("(Map)xPos:\(tileX),yPos:\(tileY))")
-                        
+                        print("(Map)inputX:\(tileX),inputY:\(tileY))")
                         print("(Map)TileX:\(node.TileX),TileY:\(node.TileY))")
                         return node
                     }
@@ -60,7 +55,6 @@ class Map{
         return Nodes[tileX][tileY]
     }
     func findTile(location:CGPoint)->MapNode{
-      //  let xPos =
         let xPos = Int((location.x/64>=0) ? (location.x/64).rounded(.up) : (location.x/64).rounded(.down))
 
         let yPos = Int((location.y/64>=0) ? (location.y/64).rounded(.up) : (location.y/64).rounded(.down))
@@ -68,7 +62,7 @@ class Map{
         
     }
     
-    func getNodeType(point:CGPoint) -> MapNode.occupiedType{
+    func getNodeType(point:CGPoint) -> OccupiedType{
         let tile = findTile(location:point)
         return tile.TileOc
     }
@@ -76,15 +70,17 @@ class Map{
     
 }
 
+enum OccupiedType{
+    case nothing ,enemy ,friend , blockedTile
+}
+
 class MapNode{
-    enum occupiedType{
-        case nothing ,enemy ,friend , blockedTile
-    }
-    var TileOc:occupiedType;
+    
+    var TileOc:OccupiedType;
     let TileX:Int
     let TileY:Int
     let Location:CGPoint
-    init(x:Int, y:Int, tileOccupiedBy tileOc:occupiedType = occupiedType.nothing){
+    init(x:Int, y:Int, tileOccupiedBy tileOc:OccupiedType = OccupiedType.nothing){
         TileX=x
         TileY=y
         Location = CGPoint(x:((x>=0) ? CGFloat(TileX*64-32) : CGFloat(TileX*64+32)),y:((y>=0) ? CGFloat(TileY*64-32) : CGFloat(TileY*64+32)))

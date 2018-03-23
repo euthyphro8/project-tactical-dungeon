@@ -39,8 +39,8 @@ public class Entity {
     
 
     func Update() {
-        for act in game.Actions{
-            game.SelectedTile.run(act)
+        for act in Actions{
+            Sprite.run(act)
         }
     }
 
