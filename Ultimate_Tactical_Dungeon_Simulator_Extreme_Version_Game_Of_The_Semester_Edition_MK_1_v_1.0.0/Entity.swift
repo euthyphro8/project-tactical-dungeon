@@ -36,7 +36,6 @@ public class Entity {
         Defense = 10
         Actions = [SKAction]()
     }
-    // TODO delete this comment 
 
     func Update() {
         for act in Actions{
