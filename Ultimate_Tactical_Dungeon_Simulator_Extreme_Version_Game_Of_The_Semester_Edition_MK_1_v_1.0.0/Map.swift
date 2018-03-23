@@ -52,7 +52,7 @@ class Map{
             }
         }
         //shouldn't make it this far...
-        return Nodes[tileX][tileY]
+        return MapNode.init(x: 100, y: 100)
     }
     func findTile(location:CGPoint)->MapNode{
         let xPos = Int((location.x/64>=0) ? (location.x/64).rounded(.up) : (location.x/64).rounded(.down))

@@ -24,12 +24,25 @@ public class Game {
     init(){
         GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "grid10x10"))), xSize:10, ySize:10, width: CGFloat(64*10), height: CGFloat(64*10))
         GameMap.Background.zPosition = 0
+        
         SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
         SelectedTile.zPosition = 1
-        SelectedTile.position = GameMap.findTile(tileX:1,tileY:1).Location        
-        Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "player_tmp"))), x:GameMap.findTile(tileX:1, tileY: 1).Location.x, y:GameMap.findTile(tileX:1, tileY: 1).Location.y, w:64, h:64)
-        Player.Sprite.zPosition = 2
+        SelectedTile.position = GameMap.findTile(tileX:1,tileY:1).Location
+        
+        //Player
+        let pTile = GameMap.findTile(tileX: 1, tileY: 1);
+        Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "player_tmp"))), x:pTile.Location.x, y:pTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE)
+        pTile.TileOc = OccupiedType.friend
+        //Enemy
+        let eTile = GameMap.findTile(tileX:3, tileY: 3);
+        let enemy = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "enemy_tmp"))), x:eTile.Location.x, y:eTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE)
+        eTile.TileOc = OccupiedType.enemy
+        
+        
+        
+        Entities.append(enemy)
         Entities.append(Player)
+        
         Actions = [SKAction]()
     }
     func Add_Children(GameScene:SKScene) {
@@ -93,6 +106,11 @@ public class Game {
                 }
                 break
             case OccupiedType.enemy:
+                if let e = Get_Entity_At_Pos(pos: pos) {
+                    if e.Damage(Damage: Player.Attack) {
+                        tile.TileOc = OccupiedType.nothing
+                    }
+                }
                 break
             case OccupiedType.friend:
                 break

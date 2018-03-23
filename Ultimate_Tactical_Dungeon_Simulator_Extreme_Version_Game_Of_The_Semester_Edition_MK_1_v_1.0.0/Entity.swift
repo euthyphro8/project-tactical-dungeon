@@ -30,6 +30,7 @@ public class Entity {
         Sprite = sprite
         Sprite.position = CGPoint(x:x,y:y)
         Sprite.scale(to: CGSize(width: w, height: h))
+        Sprite.zPosition = 2
         Max_Health = 100
         Health = Max_Health
         Attack = 10
@@ -41,6 +42,9 @@ public class Entity {
     func Update() {
         for act in Actions{
             Sprite.run(act)
+        }
+        if(Health <= 0) {
+            Sprite.removeFromParent()
         }
     }
 
