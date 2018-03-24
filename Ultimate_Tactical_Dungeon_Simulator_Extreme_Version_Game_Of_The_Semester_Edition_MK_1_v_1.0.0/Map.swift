@@ -40,10 +40,22 @@ class Map{
     }
     
     func findTile(tileX:Int,tileY:Int)->MapNode{
+        var checkedTileX = tileX
+        var checkedTileY = tileY
+        if((XSize/2)<tileX){
+            checkedTileX = XSize/2
+        }else if tileX<(0-XSize/2){
+            checkedTileX = 0-XSize/2
+        }
+        if((YSize/2)<tileY){
+            checkedTileY = YSize/2
+        }else if tileY<(0-YSize/2){
+            checkedTileY = 0-YSize/2
+        }
         for nodeA in Nodes{
-            if nodeA[0].TileY == tileY{
+            if nodeA[0].TileY == checkedTileY{
                 for node in nodeA{
-                    if (tileX == node.TileX){
+                    if (checkedTileX == node.TileX){
                         print("(Map)inputX:\(tileX),inputY:\(tileY))")
                         print("(Map)TileX:\(node.TileX),TileY:\(node.TileY))")
                         return node
