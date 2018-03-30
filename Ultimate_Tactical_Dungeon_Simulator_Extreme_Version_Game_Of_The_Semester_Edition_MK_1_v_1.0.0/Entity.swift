@@ -37,7 +37,6 @@ public class Entity {
         Defense = 10
         Actions = [SKAction]()
     }
-    
 
     func Update() {
         for act in Actions{
@@ -47,8 +46,6 @@ public class Entity {
             Sprite.removeFromParent()
         }
     }
-
-
 
     func Damage(Damage:Int)->Bool {
         let dead = Health - Damage <= 0
