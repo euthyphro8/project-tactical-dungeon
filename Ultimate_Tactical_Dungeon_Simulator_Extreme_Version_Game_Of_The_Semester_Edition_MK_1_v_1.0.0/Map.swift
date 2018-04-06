@@ -68,10 +68,8 @@ class Map{
     }
     func findTile(location:CGPoint)->MapNode{
         let xPos = Int((location.x/64>=0) ? (location.x/64).rounded(.up) : (location.x/64).rounded(.down))
-
         let yPos = Int((location.y/64>=0) ? (location.y/64).rounded(.up) : (location.y/64).rounded(.down))
         return findTile(tileX:xPos,tileY:yPos)
-        
     }
     
     func getNodeType(point:CGPoint) -> OccupiedType{

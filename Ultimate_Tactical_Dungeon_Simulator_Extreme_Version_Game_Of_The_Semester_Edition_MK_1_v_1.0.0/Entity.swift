@@ -19,6 +19,7 @@ public class Entity {
         case SOUTH
         case WEST
     }
+    let IsEnemy:Bool
     let Sprite:SKSpriteNode
     let Max_Health:Int
     var Health:Int
@@ -26,7 +27,7 @@ public class Entity {
     let Defense:Int
     var Actions:[SKAction]
     
-    init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) {
+    init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat, w: CGFloat, h: CGFloat, enemy:Bool) {
         Sprite = sprite
         Sprite.position = CGPoint(x:x,y:y)
         Sprite.scale(to: CGSize(width: w, height: h))
@@ -36,6 +37,7 @@ public class Entity {
         Attack = 10
         Defense = 10
         Actions = [SKAction]()
+        IsEnemy = enemy
     }
 
     func Update() {
@@ -73,6 +75,22 @@ public class Entity {
                 Actions.append(moveAction)
                 break
             }
+    }
+    func Move(towards pos : CGPoint) {
+        let x = Sprite.position.x - pos.x
+        let y = Sprite.position.y - pos.y
+        if y <= x && y >= -x {
+            Move(dir: Relative.EAST)
+        }
+        else if y <= x && y <= -x {
+            Move(dir: Relative.SOUTH)
+        }
+        else if y >= x && y <= -x {
+            Move(dir: Relative.WEST)
+        }
+        else if y >= x && y >= -x {
+            Move(dir: Relative.NORTH)
+        }
     }
     func Get_Bounds(pos:Relative)->(lower_left:CGPoint, upper_right:CGPoint) {
         var x0:CGFloat = 1
