@@ -76,21 +76,61 @@ public class Entity {
                 break
             }
     }
+    
+    func TakeTurn(player: Entity, from: MapNode, to: MapNode) {
+        //print("Taking turn")
+        let xx = to.TileX - from.TileX
+        let yy = to.TileY - from.TileY
+        let x = abs(xx)
+        let y = abs(yy)
+        if x < 2 && y < 2 {
+            if player.Damage(Damage: Attack) {
+                print("Game Over")
+                //Game over
+            }
+            return
+        }
+        if y <= x || y < 2 {
+            if xx < 0 {
+                Move(dir: Relative.WEST)
+                return
+            }
+            if xx > 0 {
+                Move(dir: Relative.EAST)
+                return
+            }
+        }
+        if x < y || x < 2 {
+            if yy < 0 {
+                Move(dir: Relative.SOUTH)
+                return
+            }
+            if yy > 0 {
+                Move(dir: Relative.NORTH)
+                return
+            }
+        }
+        print("[Entity][TakeTurn] Reached end of block and entity hasn't taken a turn at (\(from.TileX), \(from.TileY)) with player at (\(to.TileX), \(to.TileY)).")
+    }
     func Move(towards pos : CGPoint) {
-        let x = Sprite.position.x - pos.x
-        let y = Sprite.position.y - pos.y
-        if y <= x && y >= -x {
-            Move(dir: Relative.EAST)
-        }
-        else if y <= x && y <= -x {
-            Move(dir: Relative.SOUTH)
-        }
-        else if y >= x && y <= -x {
-            Move(dir: Relative.WEST)
-        }
-        else if y >= x && y >= -x {
-            Move(dir: Relative.NORTH)
-        }
+        
+        
+        
+        
+//        let x = Sprite.position.x - pos.x
+//        let y = Sprite.position.y - pos.y
+//        if y <= x && y >= -x {
+//            Move(dir: Relative.EAST)
+//        }
+//        else if y <= x && y <= -x {
+//            Move(dir: Relative.SOUTH)
+//        }
+//        else if y >= x && y <= -x {
+//            Move(dir: Relative.WEST)
+//        }
+//        else if y >= x && y >= -x {
+//            Move(dir: Relative.NORTH)
+//        }
     }
     func Get_Bounds(pos:Relative)->(lower_left:CGPoint, upper_right:CGPoint) {
         var x0:CGFloat = 1
