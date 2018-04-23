@@ -15,7 +15,7 @@ class Map{
     var Nodes = [[MapNode]]()
     let XSize:Int
     let YSize:Int
-    let NAN:MapNode
+    var NAN:MapNode
     
     init(background:SKSpriteNode, xSize:Int, ySize:Int){
         Background = background
@@ -23,6 +23,8 @@ class Map{
         background.zPosition = 0
         XSize = xSize
         YSize = ySize
+        NAN = MapNode(x: 0, y: 0, pos: CGPoint(x:0,y:0))
+        NAN.TileOc = OccupiedType.nan
         InitNodes()
     }
     func ToPixelPrecision(tileX: Int, tileY: Int)->CGPoint {
@@ -49,11 +51,10 @@ class Map{
             }
             Nodes.append(nodes)
         }
-        NAN = MapNode(tileX: 0, tileY: 0, pos: CGPoint(0, 0))
-        NAN.TileOc = OccupiedType.nan
+        
     }
     func findTile(tileX: Int,tileY: Int)->MapNode{
-        var index = ToIndexPrecision(tileX: tileX, tileY: tileY)
+        let index = ToIndexPrecision(tileX: tileX, tileY: tileY)
         if index.indexX >= XSize || index.indexY >= YSize || index.indexX < 0 || index.indexY < 0 {
             print("[Warning][Map][FindTile] Out of bounds, return node at 0,0.")
             return NAN

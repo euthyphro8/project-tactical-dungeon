@@ -46,7 +46,7 @@ public class Entity {
         Sprite = sprite
         Sprite.position = CGPoint(x:x,y:y)
         Sprite.scale(to: CGSize(width: w, height: h))
-        Sprite.zPosition = 2
+        Sprite.zPosition = 3
 
         TitleText = (IsEnemy ? "Enemy" : "Player") + " \(Health) / \(Max_Health)"
         Title = SKLabelNode(text: TitleText)
@@ -78,18 +78,22 @@ public class Entity {
             case Relative.CENTER:
                 break
             case Relative.NORTH:
+                Sprite.texture = Atlas.textureNamed("image12")
                 let moveAction = SKAction.moveTo(y: Sprite.position.y + Game.TILE_SIZE, duration: 0.1)
                 Actions.append(moveAction)
                 break
             case Relative.EAST:
+                Sprite.texture = Atlas.textureNamed("image08")
                 let moveAction = SKAction.moveTo(x: Sprite.position.x + Game.TILE_SIZE, duration: 0.1)
                 Actions.append(moveAction)
                 break
             case Relative.SOUTH:
+                Sprite.texture = Atlas.textureNamed("image00")
                 let moveAction = SKAction.moveTo(y: Sprite.position.y - Game.TILE_SIZE, duration: 0.1)
                 Actions.append(moveAction)
                 break
             case Relative.WEST:
+                Sprite.texture = Atlas.textureNamed("image04")
                 let moveAction = SKAction.moveTo(x: Sprite.position.x - Game.TILE_SIZE, duration: 0.1)
                 Actions.append(moveAction)
                 break

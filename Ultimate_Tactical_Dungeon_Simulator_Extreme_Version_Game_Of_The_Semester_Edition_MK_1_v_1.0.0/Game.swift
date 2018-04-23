@@ -38,20 +38,21 @@ public class Game {
     init(){
         GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "map1600x1600"))), xSize:25, ySize:25)
 
+        
         SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
-        SelectedTile.zPosition = 3
+        SelectedTile.zPosition = 2
         SelectedTile.position = GameMap.findTile(tileX:1,tileY:1).Location
         
         ProgressBar = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
-        ProgressBar.position = CGPoint(x: 0, y: 350)
-        ProgressBar.scale(to: CGSize(width: 100, height: 50))
+        ProgressBar.position = CGPoint(x: 0, y: 180)
+        ProgressBar.scale(to: CGSize(width: 350, height: 65))
         ProgressBar.zPosition = 4
         
         TurnLabel = SKLabelNode(text: "Player's Turn")
         TurnLabel.fontSize = 65
         TurnLabel.fontColor = SKColor.black
-        TurnLabel.position = CGPoint(x: 0, y: 400)
-        TurnLabel.zPosition = 4
+        TurnLabel.position = CGPoint(x: 0, y: 160)
+        TurnLabel.zPosition = 5
 
         ConsoleLabel = SKLabeolNode(text: "Game initialized")
         ConsoleLabel.fontSize = 35
@@ -62,17 +63,22 @@ public class Game {
         BowTexture = SKTexture(image: #imageLiteral(resourceName: "bow_button"))
         SwordTexture = SKTexture(image: #imageLiteral(resourceName: "sword_button"))
         AttackButton = SKSpriteNode(texture: SwordTexture)
-        AttackButton.position = CGPoint(x: 350, y: -350)
-        AttackButton.scale(to: CGSize(width: 32, height: 32))
-        AttackButton.zPosition = 4
+        AttackButton.position = CGPoint(x: 300, y: -150)
+        AttackButton.scale(to: CGSize(width: 64, height: 64))
+        AttackButton.zPosition = 5
 
         //Player
         let pTile = GameMap.findTile(tileX: 1, tileY: 1);
-        Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "player_tmp"))), x:pTile.Location.x, y:pTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:false, atlas:SKTextureAtlas(named:"knight"))
+        //let pAtlas = SKTextureAtlas(named:"knight")
+        let pAtlas = SKTextureAtlas(dictionary: ["image00":#imageLiteral(resourceName: "knight_00"), "image01":#imageLiteral(resourceName: "knight_01"), "image02":#imageLiteral(resourceName: "knight_02"), "image03":#imageLiteral(resourceName: "knight_03"), "image04":#imageLiteral(resourceName: "knight_04"), "image05":#imageLiteral(resourceName: "knight_05"), "image06":#imageLiteral(resourceName: "knight_06"), "image07":#imageLiteral(resourceName: "knight_07"), "image08":#imageLiteral(resourceName: "knight_08"), "image09":#imageLiteral(resourceName: "knight_09"), "image10":#imageLiteral(resourceName: "knight_10"), "image11":#imageLiteral(resourceName: "knight_11"), "image12":#imageLiteral(resourceName: "knight_12"),"image13":#imageLiteral(resourceName: "knight_13"),"image14":#imageLiteral(resourceName: "knight_14"), "image15":#imageLiteral(resourceName: "knight_15")])
+        
+        Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "knight_00"))), x:pTile.Location.x, y:pTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:false, atlas:pAtlas)
         pTile.TileOc = OccupiedType.friend
         //Enemy
         let eTile = GameMap.findTile(tileX:3, tileY: 3);
-        let enemy = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "enemy_tmp"))), x:eTile.Location.x, y:eTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:SKTextureAtlas(named:"demon"))
+        //let eAtlas = SKTextureAtlas(named:"something")
+        let eAtlas = SKTextureAtlas(dictionary: ["image00":#imageLiteral(resourceName: "demon_00"), "image01":#imageLiteral(resourceName: "demon_01"), "image02":#imageLiteral(resourceName: "demon_02"), "image03":#imageLiteral(resourceName: "demon_03"), "image04":#imageLiteral(resourceName: "demon_04"), "image05":#imageLiteral(resourceName: "demon_05"), "image06":#imageLiteral(resourceName: "demon_06"), "image07":#imageLiteral(resourceName: "demon_07"), "image08":#imageLiteral(resourceName: "demon_08"), "image09":#imageLiteral(resourceName: "demon_09"), "image10":#imageLiteral(resourceName: "demon_10"), "image11":#imageLiteral(resourceName: "demon_11"), "image12":#imageLiteral(resourceName: "demon_12"),"image13":#imageLiteral(resourceName: "demon_13"),"image14":#imageLiteral(resourceName: "demon_14"), "image15":#imageLiteral(resourceName: "demon_15")])
+        let enemy = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "demon_00"))), x:eTile.Location.x, y:eTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:eAtlas)
         eTile.TileOc = OccupiedType.enemy
         
         Entities.append(enemy)
@@ -106,7 +112,7 @@ public class Game {
         if !IsPlayerTurn {
             if DelayTimer > 0 {
                 DelayTimer -= 1
-                ProgressBar.size.width = CGFloat(100 / DelayTime * DelayTimer)
+                ProgressBar.size.width = CGFloat(350 / DelayTime * DelayTimer)
             }
             else {
                 Enemys_Turn()
@@ -164,6 +170,8 @@ public class Game {
         Move_Selection(to: tile.Location);
         
         switch tile.TileOc {
+            case .nan:
+            break
             case OccupiedType.nothing:
                 if(ptile.TileX == tile.TileX) {
                     if(ptile.TileY + 1 == tile.TileY || (ptile.TileY == -1 && tile.TileY == 1)) {
@@ -232,7 +240,7 @@ public class Game {
                     consoleLabel.text = "Enemy did \(e.Attack) damage to player."
                 }
                 let newTile:MapNode = GameMap.findTile(location: e.Sprite.position)
-                newtile.TileOc = OccupiedType.enemy
+                newTile.TileOc = OccupiedType.enemy
             }
         }
     }
