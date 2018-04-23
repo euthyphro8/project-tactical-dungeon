@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 import GameplayKit
+import Darwin
 
 public class Entity {
     
@@ -94,8 +95,8 @@ public class Entity {
                 break
             }
     }
-    
-    func TakeTurn(player: Entity, from: MapNode, to: MapNode) {
+    ///Returns true if attack and false if otherwise.
+    func TakeTurn(player: Entity, from: MapNode, to: MapNode)->Bool {
         //print("Taking turn")
         let xx = to.TileX - from.TileX
         let yy = to.TileY - from.TileY
@@ -106,33 +107,34 @@ public class Entity {
                 print("Game Over")
                 //Game over
             }
-            return
+            return true
         }
         if y <= x || y < 2 {
             if xx < 0 {
                 Move(dir: Relative.WEST)
                 from.TileOc = OccupiedType.nothing
-                return
+                return false
             }
             if xx > 0 {
                 Move(dir: Relative.EAST)
                 from.TileOc = OccupiedType.nothing
-                return
+                return false
             }
         }
         if x < y || x < 2 {
             if yy < 0 {
                 Move(dir: Relative.SOUTH)
                 from.TileOc = OccupiedType.nothing
-                return
+                return false
             }
             if yy > 0 {
                 Move(dir: Relative.NORTH)
                 from.TileOc = OccupiedType.nothing
-                return
+                return false
             }
         }
         print("[Entity][TakeTurn] Reached end of block and entity hasn't taken a turn at (\(from.TileX), \(from.TileY)) with player at (\(to.TileX), \(to.TileY)).")
+        return false
     }
     func Move(towards pos : CGPoint) {
 //        let x = Sprite.position.x - pos.x

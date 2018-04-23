@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 import GameplayKit
+import Darwin
 
 public class Game {
     
@@ -24,6 +25,7 @@ public class Game {
     let TurnLabel:SKLabelNode;
     let SwordTexture:SKTexture;
     let BowTexture:SKTexture;
+    let ConsoleLabel:SKLabelNode;
 
     //False for melee, true for ranged
     var AttackMode:Bool = false;
@@ -50,6 +52,12 @@ public class Game {
         TurnLabel.fontColor = SKColor.black
         TurnLabel.position = CGPoint(x: 0, y: 400)
         TurnLabel.zPosition = 4
+
+        ConsoleLabel = SKLabeolNode(text: "Game initialized")
+        ConsoleLabel.fontSize = 35
+        ConsoleLabel.fontColor - SKColor.black
+        ConsoleLabel.position = CGPoint(x: -450, y: -450)
+        ConsoleLabel.zPosition = 4
 
         BowTexture = SKTexture(image: #imageLiteral(resourceName: "bow_button"))
         SwordTexture = SKTexture(image: #imageLiteral(resourceName: "sword_button"))
@@ -83,6 +91,7 @@ public class Game {
         GameScene.addChild(TurnLabel)
         GameScene.addChild(ProgressBar)
         GameScene.addChild(AttackButton)
+        GameScene.addChild(ConsoleLabel)
     }
     
     func Update() {
@@ -111,6 +120,9 @@ public class Game {
     func Move_Selection(to: CGPoint) {
         let moveAction = SKAction.move(to: to, duration: 0.1)
         Actions.append(moveAction)
+    }
+    func PushMessageToLabel(msg: String) {
+        
     }
 
     func CheckUI(pos : CGPoint)->Bool {
@@ -188,6 +200,7 @@ public class Game {
                         if e.Damage(Damage: Player.Attack) {
                             tile.TileOc = OccupiedType.nothing
                         }
+                        consoleLabel.text = "Player did \(Player.Attack) damage to enemy."
                         return true
                     }
                     else {
@@ -214,7 +227,10 @@ public class Game {
             if e.IsEnemy {
                 let tile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
-                e.TakeTurn(player: Player, from: tile, to: ptile)
+                if e.TakeTurn(player: Player, from: tile, to: ptile) 
+                {
+                    consoleLabel.text = "Enemy did \(e.Attack) damage to player."
+                }
                 let newTile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 newtile.TileOc = OccupiedType.enemy
             }
