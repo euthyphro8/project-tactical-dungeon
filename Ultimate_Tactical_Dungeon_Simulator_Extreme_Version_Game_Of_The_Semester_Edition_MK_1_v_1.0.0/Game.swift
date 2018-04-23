@@ -34,7 +34,7 @@ public class Game {
     var DelayTimer = 30
     
     init(){
-        GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "grid10x10"))), xSize:10, ySize:10)
+        GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "map1600x1600"))), xSize:25, ySize:25)
 
         SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
         SelectedTile.zPosition = 3
@@ -60,11 +60,11 @@ public class Game {
 
         //Player
         let pTile = GameMap.findTile(tileX: 1, tileY: 1);
-        Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "player_tmp"))), x:pTile.Location.x, y:pTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:false)
+        Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "player_tmp"))), x:pTile.Location.x, y:pTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:false, atlas:SKTextureAtlas(named:"knight"))
         pTile.TileOc = OccupiedType.friend
         //Enemy
         let eTile = GameMap.findTile(tileX:3, tileY: 3);
-        let enemy = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "enemy_tmp"))), x:eTile.Location.x, y:eTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true)
+        let enemy = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "enemy_tmp"))), x:eTile.Location.x, y:eTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:SKTextureAtlas(named:"demon"))
         eTile.TileOc = OccupiedType.enemy
         
         Entities.append(enemy)
