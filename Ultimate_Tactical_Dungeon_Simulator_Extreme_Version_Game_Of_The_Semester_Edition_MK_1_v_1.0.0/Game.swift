@@ -54,9 +54,9 @@ public class Game {
         TurnLabel.position = CGPoint(x: 0, y: 160)
         TurnLabel.zPosition = 5
 
-        ConsoleLabel = SKLabeolNode(text: "Game initialized")
+        ConsoleLabel = SKLabelNode(text: "Game initialized")
         ConsoleLabel.fontSize = 35
-        ConsoleLabel.fontColor - SKColor.black
+        ConsoleLabel.fontColor = SKColor.black
         ConsoleLabel.position = CGPoint(x: -450, y: -450)
         ConsoleLabel.zPosition = 4
 
