@@ -16,6 +16,7 @@ class GameScene: SKScene {
     var graphs = [String : GKGraph]()
     var game:Game = Game()
     
+    
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
