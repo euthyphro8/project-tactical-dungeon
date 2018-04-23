@@ -21,23 +21,35 @@ public class Entity {
     }
     let IsEnemy:Bool
     let Sprite:SKSpriteNode
+    let Title:SKLabelNode
+    var TitleText:String
+    
     let Max_Health:Int
     var Health:Int
     let Attack:Int
     let Defense:Int
     var Actions:[SKAction]
+
+
     
     init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat, w: CGFloat, h: CGFloat, enemy:Bool) {
-        Sprite = sprite
-        Sprite.position = CGPoint(x:x,y:y)
-        Sprite.scale(to: CGSize(width: w, height: h))
-        Sprite.zPosition = 2
         Max_Health = 100
         Health = Max_Health
         Attack = 10
         Defense = 10
         Actions = [SKAction]()
         IsEnemy = enemy
+
+        Sprite = sprite
+        Sprite.position = CGPoint(x:x,y:y)
+        Sprite.scale(to: CGSize(width: w, height: h))
+        Sprite.zPosition = 2
+
+        TitleText = (IsEnemy ? "Enemy" : "Player") + " \(Health) / \(Max_Health)"
+        Title = SKLabelNode(text: TitleText)
+        Title.size = 20
+        Title.position = CGPoint(x: x, y: y + 40)
+        Title.zPosition = 3
     }
 
     func Update() {
@@ -46,7 +58,11 @@ public class Entity {
         }
         if(Health <= 0) {
             Sprite.removeFromParent()
+            Title.removeFromParent()
         }
+        
+        TitleText = (IsEnemy ? "Enemy" : "Player") + " \(Health) / \(Max_Health)"
+        Title.position = CGPoint(x: Sprite.position.x, y: Sprite.position.y + 40)
     }
 
     func Damage(Damage:Int)->Bool {
@@ -113,10 +129,6 @@ public class Entity {
         print("[Entity][TakeTurn] Reached end of block and entity hasn't taken a turn at (\(from.TileX), \(from.TileY)) with player at (\(to.TileX), \(to.TileY)).")
     }
     func Move(towards pos : CGPoint) {
-        
-        
-        
-        
 //        let x = Sprite.position.x - pos.x
 //        let y = Sprite.position.y - pos.y
 //        if y <= x && y >= -x {

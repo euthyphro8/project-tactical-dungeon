@@ -29,7 +29,7 @@ class Map{
     }
     func ToTilePrecision(pos: CGPoint)->(tileX: Int, tileY: Int) {
         print("[ToTilePrecision] using \(pos) and getting (\(Int(pos.x / Game.TILE_SIZE)), \(Int(pos.y / Game.TILE_SIZE)))")
-        return (tileX: Int(pos.x / Game.TILE_SIZE), tileY: Int(pos.y / Game.TILE_SIZE))
+        return (tileX: pos.x < 0 ? Int(pos.x / Game.TILE_SIZE) - 1 :  Int(pos.x / Game.TILE_SIZE), tileY: pos.y < 0 ? Int(pos.y / Game.TILE_SIZE) : Int(pos.y / Game.TILE_SIZE) - 1)
     }
     func ToTilePrecision(indexX: Int, indexY: Int)->(tileX: Int, tileY: Int) {
         return (tileX: indexX - (XSize / 2), tileY: indexY - (YSize / 2))
@@ -41,7 +41,7 @@ class Map{
     func InitNodes(){
         for i in 0...XSize {
             var nodes = [MapNode]()
-            for j in 0...YSize{
+            for j in 0...YSize {
                 let tile = ToTilePrecision(indexX: i, indexY: j)
                 let pos = ToPixelPrecision(tileX: tile.tileX, tileY: tile.tileY)
                 let node = MapNode(x:tile.tileX, y:tile.tileY, pos:pos)
@@ -60,8 +60,6 @@ class Map{
         }
         print("[FindTile] Turned (\(tileX),\(tileY)) to (\(index.indexX),\(index.indexY))")
         return Nodes[index.indexX][index.indexY]
-        
-        
         
 //        var checkedTileX = tileX
 //        var checkedTileY = tileY
@@ -92,7 +90,6 @@ class Map{
     func findTile(location:CGPoint)->MapNode{
         let tile = ToTilePrecision(pos: location)
         return findTile(tileX: tile.tileX, tileY: tile.tileY)
-        
 //        let xPos = Int(location.x / 64)
 //        let yPos = Int(location.y / 64)
 ////        let xPos = Int((location.x/64>=0) ? (location.x/64).rounded(.up) : (location.x/64).rounded(.down))
