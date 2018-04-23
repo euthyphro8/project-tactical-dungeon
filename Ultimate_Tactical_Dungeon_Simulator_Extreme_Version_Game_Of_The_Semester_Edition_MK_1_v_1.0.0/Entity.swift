@@ -47,7 +47,7 @@ public class Entity {
 
         TitleText = (IsEnemy ? "Enemy" : "Player") + " \(Health) / \(Max_Health)"
         Title = SKLabelNode(text: TitleText)
-        Title.size = 20
+        Title.fontSize = 20
         Title.position = CGPoint(x: x, y: y + 40)
         Title.zPosition = 3
     }

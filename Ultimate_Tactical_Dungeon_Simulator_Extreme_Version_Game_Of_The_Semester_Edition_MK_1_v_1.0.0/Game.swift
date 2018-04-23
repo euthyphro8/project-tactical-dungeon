@@ -26,7 +26,7 @@ public class Game {
     let BowTexture:SKTexture;
 
     //False for melee, true for ranged
-    var AttackMode:Bool;
+    var AttackMode:Bool = false;
 
     var Actions:[SKAction]
     var IsPlayerTurn: Bool
@@ -81,6 +81,8 @@ public class Game {
             GameScene.addChild(ent.Title)
         }
         GameScene.addChild(TurnLabel)
+        GameScene.addChild(ProgressBar)
+        GameScene.addChild(AttackButton)
     }
     
     func Update() {
@@ -95,7 +97,7 @@ public class Game {
         if !IsPlayerTurn {
             if DelayTimer > 0 {
                 DelayTimer -= 1
-                ProgressBar.width = CGFloat(100 / DelayTime * DelatyTimer)
+                ProgressBar.size.width = CGFloat(100 / DelayTime * DelayTimer)
             }
             else {
                 Enemys_Turn()
@@ -114,8 +116,8 @@ public class Game {
     func CheckUI(pos : CGPoint)->Bool {
         let a = CGPoint(x:AttackButton.position.x - (AttackButton.size.width / 2), y:AttackButton.position.y - (AttackButton.size.height / 2))
         let b = CGPoint(x:AttackButton.position.x + (AttackButton.size.width / 2), y:AttackButton.position.y + (AttackButton.size.height / 2))
-        if (pos.x >= a.x && pos.x < b.x && pox.y >= a.y && pox.y < b.y) {
-            AttackMode != AttackMode
+        if (pos.x >= a.x && pos.x < b.x && pos.y >= a.y && pos.y < b.y) {
+            AttackMode = !AttackMode
             AttackButton.texture = AttackMode ? BowTexture : SwordTexture
             return true
         }
@@ -187,8 +189,8 @@ public class Game {
                         return true
                     }
                     else {
-                        let xx = abs(tile.TileX - pTile.TileX)
-                        let yy = abs(tile.TileY - pTile.TileY)
+                        let xx = abs(tile.TileX - ptile.TileX)
+                        let yy = abs(tile.TileY - ptile.TileY)
                         if xx < 3 && yy < 3 {
                             if e.Damage(Damage: Player.Attack) {
                                 tile.TileOc = OccupiedType.nothing
