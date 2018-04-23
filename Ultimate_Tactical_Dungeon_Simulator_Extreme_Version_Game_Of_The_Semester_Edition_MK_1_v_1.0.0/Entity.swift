@@ -109,20 +109,24 @@ public class Entity {
         if y <= x || y < 2 {
             if xx < 0 {
                 Move(dir: Relative.WEST)
+                from.TileOc = OccupiedType.nothing
                 return
             }
             if xx > 0 {
                 Move(dir: Relative.EAST)
+                from.TileOc = OccupiedType.nothing
                 return
             }
         }
         if x < y || x < 2 {
             if yy < 0 {
                 Move(dir: Relative.SOUTH)
+                from.TileOc = OccupiedType.nothing
                 return
             }
             if yy > 0 {
                 Move(dir: Relative.NORTH)
+                from.TileOc = OccupiedType.nothing
                 return
             }
         }

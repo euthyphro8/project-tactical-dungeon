@@ -138,7 +138,9 @@ public class Game {
         else {
             //TODO: Simply move selection tile
             let tile:MapNode = GameMap.findTile(location: pos)
-            Move_Selection(to: tile.Location);
+            if tile.TileOc != OccupiedType.nan {
+                Move_Selection(to: tile.Location)
+            }
         }
     }
     func Players_Turn(atPoint pos : CGPoint)->Bool {
@@ -213,6 +215,8 @@ public class Game {
                 let tile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
                 e.TakeTurn(player: Player, from: tile, to: ptile)
+                let newTile:MapNode = GameMap.findTile(location: e.Sprite.position)
+                newtile.TileOc = OccupiedType.enemy
             }
         }
     }
