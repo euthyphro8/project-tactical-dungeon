@@ -30,6 +30,7 @@ public class Entity {
     var Health:Int
     let Attack:Int
     let Defense:Int
+    let Agility:Int
     var Actions:[SKAction]
 
 
@@ -41,6 +42,7 @@ public class Entity {
         Defense = 10
         Actions = [SKAction]()
         IsEnemy = enemy
+        Agility = IsEnemy ? 60 : 80
 
         Atlas = atlas
         Sprite = sprite
@@ -99,46 +101,53 @@ public class Entity {
                 break
             }
     }
-    ///Returns true if attack and false if otherwise.
-    func TakeTurn(player: Entity, from: MapNode, to: MapNode)->Bool {
+    ///Enemy turn : returns true if attack and false if otherwise.
+    func TakeTurn(player: Entity, from: MapNode, to: MapNode)->Int {
         //print("Taking turn")
         let xx = to.TileX - from.TileX
         let yy = to.TileY - from.TileY
         let x = abs(xx)
         let y = abs(yy)
         if x < 2 && y < 2 {
-            if player.Damage(Damage: Attack) {
-                print("Game Over")
-                //Game over
+            let dmg = GetAttack()
+            if dmg != 0 {
+                if player.Damage(Damage: Attack) {
+                    print("Game Over")
+                    //Game over
+                    return Damage
+                }
             }
-            return true
+            else {
+                return -1
+            }
+            return Damage
         }
         if y <= x || y < 2 {
             if xx < 0 {
                 Move(dir: Relative.WEST)
                 from.TileOc = OccupiedType.nothing
-                return false
+                return 0
             }
             if xx > 0 {
                 Move(dir: Relative.EAST)
                 from.TileOc = OccupiedType.nothing
-                return false
+                return 0
             }
         }
         if x < y || x < 2 {
             if yy < 0 {
                 Move(dir: Relative.SOUTH)
                 from.TileOc = OccupiedType.nothing
-                return false
+                return 0
             }
             if yy > 0 {
                 Move(dir: Relative.NORTH)
                 from.TileOc = OccupiedType.nothing
-                return false
+                return 0
             }
         }
         print("[Entity][TakeTurn] Reached end of block and entity hasn't taken a turn at (\(from.TileX), \(from.TileY)) with player at (\(to.TileX), \(to.TileY)).")
-        return false
+        return 0
     }
     func Move(towards pos : CGPoint) {
 //        let x = Sprite.position.x - pos.x
@@ -155,6 +164,16 @@ public class Entity {
 //        else if y >= x && y >= -x {
 //            Move(dir: Relative.NORTH)
 //        }
+    }
+    func GetAttack()->Int {
+       let rng = Int(arc4random_uniform(100))
+       if rng <= Agility {
+           return Attack
+       }
+       else {
+           return 0
+       }
+
     }
     func Get_Bounds(pos:Relative)->(lower_left:CGPoint, upper_right:CGPoint) {
         var x0:CGFloat = 1

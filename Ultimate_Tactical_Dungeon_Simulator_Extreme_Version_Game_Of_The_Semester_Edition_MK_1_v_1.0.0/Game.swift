@@ -203,18 +203,27 @@ public class Game {
                 }
                 break
             case OccupiedType.enemy:
+                let dmg = Player.GetAttack()
                 if let e = Get_Entity_At_Pos(pos: pos) {
                     if AttackMode {
+                        if dmg == 0 {
+                            ConsoleLabel.text = "Player missed."
+                            return true;
+                        }
                         if e.Damage(Damage: Player.Attack) {
                             tile.TileOc = OccupiedType.nothing
                         }
-                        consoleLabel.text = "Player did \(Player.Attack) damage to enemy."
+                        ConsoleLabel.text = "Player did \(Player.Attack) damage to enemy."
                         return true
                     }
                     else {
                         let xx = abs(tile.TileX - ptile.TileX)
                         let yy = abs(tile.TileY - ptile.TileY)
                         if xx < 3 && yy < 3 {
+                            if dmg == 0 {
+                                ConsoleLabel.text = "Player missed."
+                                return true;
+                            }
                             if e.Damage(Damage: Player.Attack) {
                                 tile.TileOc = OccupiedType.nothing
                             }
@@ -235,13 +244,18 @@ public class Game {
             if e.IsEnemy {
                 let tile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
-                if e.TakeTurn(player: Player, from: tile, to: ptile) 
+                let dmg = e.TakeTurn(player: Player, from: tile, to: ptile) 
+                if  dmg == -1
                 {
-                    consoleLabel.text = "Enemy did \(e.Attack) damage to player."
+                    ConsoleLabel.text = "Enemy missed attack."
+                }
+                else if dmg > 0 {
+                    Player.Damage(Damage: dmg)
+                    ConsoleLabel.text = "Enemy did \(dmg) damage to player."
                 }
                 let newTile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 newTile.TileOc = OccupiedType.enemy
-            }
+            } 
         }
     }
     
