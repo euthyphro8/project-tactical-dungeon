@@ -21,6 +21,7 @@ public class Entity {
     }
     let IsEnemy:Bool
     let Sprite:SKSpriteNode
+    let Atlas:SKTextureAtlas
     let Title:SKLabelNode
     var TitleText:String
     
@@ -32,7 +33,7 @@ public class Entity {
 
 
     
-    init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat, w: CGFloat, h: CGFloat, enemy:Bool) {
+    init(sprite:SKSpriteNode, x:CGFloat, y: CGFloat, w: CGFloat, h: CGFloat, enemy:Bool, atlas:SKTextureAtlas) {
         Max_Health = 100
         Health = Max_Health
         Attack = 10
@@ -40,6 +41,7 @@ public class Entity {
         Actions = [SKAction]()
         IsEnemy = enemy
 
+        Atlas = atlas
         Sprite = sprite
         Sprite.position = CGPoint(x:x,y:y)
         Sprite.scale(to: CGSize(width: w, height: h))

@@ -30,8 +30,7 @@ class Map{
     }
     func ToTilePrecision(pos: CGPoint)->(tileX: Int, tileY: Int) {
         print("[ToTilePrecision] using \(pos) and getting (\(Int(pos.x / Game.TILE_SIZE)), \(Int(pos.y / Game.TILE_SIZE)))")
-        return (tileX: pos.x < 0 ? Int(pos.x / Game.TILE_SIZE) - 1 :  Int(pos.x / Game.TILE_SIZE), 
-                    tileY: pos.y < 0 ? Int(pos.y / Game.TILE_SIZE) - 1 : Int(pos.y / Game.TILE_SIZE))
+        return (tileX: pos.x < 0 ? Int(pos.x / Game.TILE_SIZE) - 1 :  Int(pos.x / Game.TILE_SIZE), tileY: pos.y < 0 ? Int(pos.y / Game.TILE_SIZE) - 1: Int(pos.y / Game.TILE_SIZE) )
     }
     func ToTilePrecision(indexX: Int, indexY: Int)->(tileX: Int, tileY: Int) {
         return (tileX: indexX - (XSize / 2), tileY: indexY - (YSize / 2))
@@ -55,7 +54,7 @@ class Map{
     }
     func findTile(tileX: Int,tileY: Int)->MapNode{
         var index = ToIndexPrecision(tileX: tileX, tileY: tileY)
-        if index.indexX >= XSize || index.indexY >= YSize {
+        if index.indexX >= XSize || index.indexY >= YSize || index.indexX < 0 || index.indexY < 0 {
             print("[Warning][Map][FindTile] Out of bounds, return node at 0,0.")
             return NAN
         }
@@ -63,7 +62,7 @@ class Map{
         return Nodes[index.indexX][index.indexY]
     }
     func findTile(location:CGPoint)->MapNode{
-        let tile = ToTilePrecision(pos: location)
+        let tile = ToTilePrecision(pos: CGPoint(x:location.x+32,y:location.y+32))
         return findTile(tileX: tile.tileX, tileY: tile.tileY)
     }
     func getNodeType(location:CGPoint) -> OccupiedType{
