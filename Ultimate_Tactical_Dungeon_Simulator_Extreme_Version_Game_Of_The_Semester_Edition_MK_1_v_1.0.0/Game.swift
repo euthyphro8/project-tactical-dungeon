@@ -54,9 +54,9 @@ public class Game {
         TurnLabel.position = CGPoint(x: 0, y: 160)
         TurnLabel.zPosition = 5
 
-        ConsoleLabel = SKLabeolNode(text: "Game initialized")
+        ConsoleLabel = SKLabelNode(text: "Game initialized")
         ConsoleLabel.fontSize = 35
-        ConsoleLabel.fontColor - SKColor.black
+        ConsoleLabel.fontColor = SKColor.black
         ConsoleLabel.position = CGPoint(x: -450, y: -450)
         ConsoleLabel.zPosition = 4
 
@@ -208,7 +208,7 @@ public class Game {
                         if e.Damage(Damage: Player.Attack) {
                             tile.TileOc = OccupiedType.nothing
                         }
-                        consoleLabel.text = "Player did \(Player.Attack) damage to enemy."
+                        ConsoleLabel.text = "Player did \(Player.Attack) damage to enemy."
                         return true
                     }
                     else {
@@ -237,7 +237,7 @@ public class Game {
                 let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
                 if e.TakeTurn(player: Player, from: tile, to: ptile) 
                 {
-                    consoleLabel.text = "Enemy did \(e.Attack) damage to player."
+                    ConsoleLabel.text = "Enemy did \(e.Attack) damage to player."
                 }
                 let newTile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 newTile.TileOc = OccupiedType.enemy
