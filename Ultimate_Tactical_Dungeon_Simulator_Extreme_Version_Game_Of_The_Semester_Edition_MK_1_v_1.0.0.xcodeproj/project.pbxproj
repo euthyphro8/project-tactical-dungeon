@@ -299,6 +299,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8XAC7TAFE4;
 				INFOPLIST_FILE = Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephemerality.tactics.Ultimate-Tactical-Dungeon-Simulator-Extreme-Version-Game-Of-The-Semester-Edition-MK-1-v-1-0-0";
@@ -313,6 +314,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8XAC7TAFE4;
 				INFOPLIST_FILE = Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephemerality.tactics.Ultimate-Tactical-Dungeon-Simulator-Extreme-Version-Game-Of-The-Semester-Edition-MK-1-v-1-0-0";

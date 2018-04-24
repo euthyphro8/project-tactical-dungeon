@@ -115,13 +115,13 @@ public class Entity {
                 if player.Damage(Damage: Attack) {
                     print("Game Over")
                     //Game over
-                    return Damage
+                    return dmg // Changed from Damage to dmg to make code compile...not sure if that's a real fix - Nathanael
                 }
             }
             else {
                 return -1
             }
-            return Damage
+            return dmg // Changed from Damage to dmg to make code compile...not sure if that's a real fix - Nathanael
         }
         if y <= x || y < 2 {
             if xx < 0 {
