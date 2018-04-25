@@ -129,24 +129,24 @@ public class Entity {
             if xx < 0 {
                 Move(dir: Relative.WEST)
                 from.TileOc = OccupiedType.nothing
-                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x - 64, y: Sprite.position.y))
+                return (dmg: -2, newPos: CGPoint(x: Sprite.position.x - 64, y: Sprite.position.y))
             }
             if xx > 0 {
                 Move(dir: Relative.EAST)
                 from.TileOc = OccupiedType.nothing
-                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x + 64, y: Sprite.position.y))
+                return (dmg: -2, newPos: CGPoint(x: Sprite.position.x + 64, y: Sprite.position.y))
             }
         }
         if x < y || x < 2 {
             if yy < 0 {
                 Move(dir: Relative.SOUTH)
                 from.TileOc = OccupiedType.nothing
-                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x, y: Sprite.position.y - 64))
+                return (dmg: -2, newPos: CGPoint(x: Sprite.position.x, y: Sprite.position.y - 64))
             }
             if yy > 0 {
                 Move(dir: Relative.NORTH)
                 from.TileOc = OccupiedType.nothing
-                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x, y: Sprite.position.y + 64))
+                return (dmg: -2, newPos: CGPoint(x: Sprite.position.x, y: Sprite.position.y + 64))
             }
         }
         print("[Entity][TakeTurn] Reached end of block and entity hasn't taken a turn at (\(from.TileX), \(from.TileY)) with player at (\(to.TileX), \(to.TileY)).")

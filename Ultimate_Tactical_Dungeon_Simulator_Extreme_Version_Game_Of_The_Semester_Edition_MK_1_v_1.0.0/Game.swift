@@ -45,7 +45,7 @@ public class Game {
         //DeathAudio = try? AVAudioPlayer(contentsOf: deathPath)
         GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "map1600x1600"))), xSize:25, ySize:25)
 
-        SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
+        SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "selectionframe")))
         SelectedTile.zPosition = 2
         SelectedTile.position = GameMap.findTile(tileX:1,tileY:1).Location
         
@@ -55,7 +55,7 @@ public class Game {
         ProgressBar.zPosition = 4
         
         TurnLabel = SKLabelNode(text: "Player's Turn")
-        TurnLabel.fontSize = 65
+        TurnLabel.fontSize = 55
         TurnLabel.fontColor = SKColor.black
         TurnLabel.position = CGPoint(x: 0, y: 160)
         TurnLabel.zPosition = 5
@@ -64,7 +64,7 @@ public class Game {
         ConsoleLabel = SKLabelNode(text: "Game initialized")
         ConsoleLabel.fontSize = 28
         ConsoleLabel.fontColor = SKColor.black
-        ConsoleLabel.position = CGPoint(x: -180, y: -200)
+        ConsoleLabel.position = CGPoint(x: -175, y: -200)
         ConsoleLabel.zPosition = 4
         ConsoleLabel.fontName = "Marion-Bold"
 
@@ -87,20 +87,33 @@ public class Game {
         
 
         //Player
-        let pTile = GameMap.findTile(tileX: 1, tileY: 1);
+        let pTile = GameMap.findTile(tileX: -5, tileY: 0);
         //let pAtlas = SKTextureAtlas(named:"knight")
         let pAtlas = SKTextureAtlas(dictionary: ["image00":#imageLiteral(resourceName: "knight_00"), "image01":#imageLiteral(resourceName: "knight_01"), "image02":#imageLiteral(resourceName: "knight_02"), "image03":#imageLiteral(resourceName: "knight_03"), "image04":#imageLiteral(resourceName: "knight_04"), "image05":#imageLiteral(resourceName: "knight_05"), "image06":#imageLiteral(resourceName: "knight_06"), "image07":#imageLiteral(resourceName: "knight_07"), "image08":#imageLiteral(resourceName: "knight_08"), "image09":#imageLiteral(resourceName: "knight_09"), "image10":#imageLiteral(resourceName: "knight_10"), "image11":#imageLiteral(resourceName: "knight_11"), "image12":#imageLiteral(resourceName: "knight_12"),"image13":#imageLiteral(resourceName: "knight_13"),"image14":#imageLiteral(resourceName: "knight_14"), "image15":#imageLiteral(resourceName: "knight_15")])
         
         Player = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "knight_00"))), x:pTile.Location.x, y:pTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:false, atlas:pAtlas)
         pTile.TileOc = OccupiedType.friend
         //Enemy
-        let eTile = GameMap.findTile(tileX:3, tileY: 3);
+        let eTile1 = GameMap.findTile(tileX:12, tileY: 12);
+        let eTile2 = GameMap.findTile(tileX:-10, tileY: 10);
+        let eTile3 = GameMap.findTile(tileX:5, tileY: 2);
+        let eTile4 = GameMap.findTile(tileX:5, tileY: -2);
         //let eAtlas = SKTextureAtlas(named:"something")
         let eAtlas = SKTextureAtlas(dictionary: ["image00":#imageLiteral(resourceName: "demon_00"), "image01":#imageLiteral(resourceName: "demon_01"), "image02":#imageLiteral(resourceName: "demon_02"), "image03":#imageLiteral(resourceName: "demon_03"), "image04":#imageLiteral(resourceName: "demon_04"), "image05":#imageLiteral(resourceName: "demon_05"), "image06":#imageLiteral(resourceName: "demon_06"), "image07":#imageLiteral(resourceName: "demon_07"), "image08":#imageLiteral(resourceName: "demon_08"), "image09":#imageLiteral(resourceName: "demon_09"), "image10":#imageLiteral(resourceName: "demon_10"), "image11":#imageLiteral(resourceName: "demon_11"), "image12":#imageLiteral(resourceName: "demon_12"),"image13":#imageLiteral(resourceName: "demon_13"),"image14":#imageLiteral(resourceName: "demon_14"), "image15":#imageLiteral(resourceName: "demon_15")])
-        let enemy = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "demon_00"))), x:eTile.Location.x, y:eTile.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:eAtlas)
-        eTile.TileOc = OccupiedType.enemy
         
-        Entities.append(enemy)
+        let enemy1 = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "demon_00"))), x:eTile1.Location.x, y:eTile1.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:eAtlas)
+        let enemy2 = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "demon_00"))), x:eTile2.Location.x, y:eTile2.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:eAtlas)
+        let enemy3 = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "demon_00"))), x:eTile3.Location.x, y:eTile3.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:eAtlas)
+        let enemy4 = Entity(sprite:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "demon_00"))), x:eTile4.Location.x, y:eTile4.Location.y, w:Game.TILE_SIZE, h:Game.TILE_SIZE, enemy:true,atlas:eAtlas)
+        eTile1.TileOc = OccupiedType.enemy
+        eTile2.TileOc = OccupiedType.enemy
+        eTile3.TileOc = OccupiedType.enemy
+        eTile4.TileOc = OccupiedType.enemy
+        
+        Entities.append(enemy1)
+        Entities.append(enemy2)
+        Entities.append(enemy3)
+        Entities.append(enemy4)
         Entities.append(Player)
         
         Actions = [SKAction]()
@@ -280,15 +293,14 @@ public class Game {
                 let tile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
                 let result = e.TakeTurn(player: Player, from: tile, to: ptile) 
-                if  result.dmg == -1
+                if  result.dmg == -1 || result.dmg == 0
                 {
                     ConsoleLabel.text = "Enemy missed attack."
                 }
                 else if result.dmg > 0 {
-                    Player.Damage(Damage: result.dmg)
                     ConsoleLabel.text = "Enemy did \(result.dmg) damage to player."
                 }
-                else if result.dmg == 0 {
+                else if result.dmg == -2 {
                     let newTile:MapNode = GameMap.findTile(location: result.newPos)
                     newTile.TileOc = OccupiedType.enemy
                     tile.TileOc = OccupiedType.nothing
