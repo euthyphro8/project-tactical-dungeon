@@ -57,7 +57,7 @@ public class Game {
         ConsoleLabel = SKLabelNode(text: "Game initialized")
         ConsoleLabel.fontSize = 35
         ConsoleLabel.fontColor = SKColor.black
-        ConsoleLabel.position = CGPoint(x: -450, y: -450)
+        ConsoleLabel.position = CGPoint(x: -300, y: -150)
         ConsoleLabel.zPosition = 4
 
         BowTexture = SKTexture(image: #imageLiteral(resourceName: "bow_button"))
@@ -171,7 +171,7 @@ public class Game {
         
         switch tile.TileOc {
             case .nan:
-            break
+                break
             case OccupiedType.nothing:
                 if(ptile.TileX == tile.TileX) {
                     if(ptile.TileY + 1 == tile.TileY || (ptile.TileY == -1 && tile.TileY == 1)) {
@@ -213,18 +213,18 @@ public class Game {
                         if e.Damage(Damage: Player.Attack) {
                             tile.TileOc = OccupiedType.nothing
                         }
-                        ConsoleLabel.text = "Player did \(Player.Attack) damage to enemy."
+                        ConsoleLabel.text = "Player did \(dmg) damage to enemy."
                         return true
                     }
                     else {
                         let xx = abs(tile.TileX - ptile.TileX)
                         let yy = abs(tile.TileY - ptile.TileY)
-                        if xx < 3 && yy < 3 {
+                        if xx < 2 && yy < 2 {
                             if dmg == 0 {
                                 ConsoleLabel.text = "Player missed."
                                 return true;
                             }
-                            if e.Damage(Damage: Player.Attack) {
+                            if e.Damage(Damage: dmg) {
                                 tile.TileOc = OccupiedType.nothing
                             }
                             return true
@@ -244,17 +244,20 @@ public class Game {
             if e.IsEnemy {
                 let tile:MapNode = GameMap.findTile(location: e.Sprite.position)
                 let ptile:MapNode = GameMap.findTile(location: Player.Sprite.position)
-                let dmg = e.TakeTurn(player: Player, from: tile, to: ptile) 
-                if  dmg == -1
+                let result = e.TakeTurn(player: Player, from: tile, to: ptile) 
+                if  result.dmg == -1
                 {
                     ConsoleLabel.text = "Enemy missed attack."
                 }
-                else if dmg > 0 {
-                    Player.Damage(Damage: dmg)
-                    ConsoleLabel.text = "Enemy did \(dmg) damage to player."
+                else if result.dmg > 0 {
+                    Player.Damage(Damage: result.dmg)
+                    ConsoleLabel.text = "Enemy did \(result.dmg) damage to player."
                 }
-                let newTile:MapNode = GameMap.findTile(location: e.Sprite.position)
-                newTile.TileOc = OccupiedType.enemy
+                else if result.dmg == 0 {
+                    let newTile:MapNode = GameMap.findTile(location: result.newPos)
+                    newTile.TileOc = OccupiedType.enemy
+                    tile.TileOc = OccupiedType.nothing
+                }
             } 
         }
     }

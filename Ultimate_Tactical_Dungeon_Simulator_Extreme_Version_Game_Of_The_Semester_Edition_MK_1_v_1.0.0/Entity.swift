@@ -103,7 +103,7 @@ public class Entity {
             }
     }
     ///Enemy turn : returns true if attack and false if otherwise.
-    func TakeTurn(player: Entity, from: MapNode, to: MapNode)->Int {
+    func TakeTurn(player: Entity, from: MapNode, to: MapNode)->(dmg: Int, newPos: CGPoint) {
         //print("Taking turn")
         let xx = to.TileX - from.TileX
         let yy = to.TileY - from.TileY
@@ -115,40 +115,40 @@ public class Entity {
                 if player.Damage(Damage: Attack) {
                     print("Game Over")
                     //Game over
-                    return dmg // Changed from Damage to dmg to make code compile...not sure if that's a real fix - Nathanael
+                return (dmg: dmg, newPos: CGPoint(x: 0, y: 0))
                 }
             }
             else {
-                return -1
+                return (dmg: dmg, newPos: CGPoint(x: 0, y: 0))
             }
-            return dmg // Changed from Damage to dmg to make code compile...not sure if that's a real fix - Nathanael
+            return dmg
         }
         if y <= x || y < 2 {
             if xx < 0 {
                 Move(dir: Relative.WEST)
                 from.TileOc = OccupiedType.nothing
-                return 0
+                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x - 64, y: Sprite.position.y))
             }
             if xx > 0 {
                 Move(dir: Relative.EAST)
                 from.TileOc = OccupiedType.nothing
-                return 0
+                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x + 64, y: Sprite.position.y))
             }
         }
         if x < y || x < 2 {
             if yy < 0 {
                 Move(dir: Relative.SOUTH)
                 from.TileOc = OccupiedType.nothing
-                return 0
+                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x, y: Sprite.position.y - 64))
             }
             if yy > 0 {
                 Move(dir: Relative.NORTH)
                 from.TileOc = OccupiedType.nothing
-                return 0
+                return (dmg: 0, newPos: CGPoint(x: Sprite.position.x, y: Sprite.position.y + 64))
             }
         }
         print("[Entity][TakeTurn] Reached end of block and entity hasn't taken a turn at (\(from.TileX), \(from.TileY)) with player at (\(to.TileX), \(to.TileY)).")
-        return 0
+        return (dmg: -1, newPos: CGPoint(x: 0, y: 0))
     }
     func Move(towards pos : CGPoint) {
 //        let x = Sprite.position.x - pos.x
