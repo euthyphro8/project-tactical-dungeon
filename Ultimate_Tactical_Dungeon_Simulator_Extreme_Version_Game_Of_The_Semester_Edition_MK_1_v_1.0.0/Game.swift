@@ -64,8 +64,9 @@ public class Game {
         ConsoleLabel = SKLabelNode(text: "Game initialized")
         ConsoleLabel.fontSize = 28
         ConsoleLabel.fontColor = SKColor.black
-        ConsoleLabel.position = CGPoint(x: -200, y: -200)
+        ConsoleLabel.position = CGPoint(x: -180, y: -200)
         ConsoleLabel.zPosition = 4
+        ConsoleLabel.fontName = "Marion-Bold"
 
         BowTexture = SKTexture(image: #imageLiteral(resourceName: "bow_button"))
         SwordTexture = SKTexture(image: #imageLiteral(resourceName: "sword_button"))

@@ -56,7 +56,7 @@ public class Entity {
         Title.fontColor = SKColor.black
         Title.position = CGPoint(x: x, y: y + 40)
         Title.zPosition = 3
-        //Title.font = UIFont.boldSystemFont(ofSize: 20)
+        Title.fontName = "Marion-Bold"
     }
 
     func Update() {
