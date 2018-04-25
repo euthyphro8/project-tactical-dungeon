@@ -30,7 +30,7 @@ public class Game {
 
     //False for melee, true for ranged
     var AttackMode:Bool = false;
-
+    var HasDied:Bool = false;
     var Actions:[SKAction]
     var IsPlayerTurn: Bool
     let DelayTime = 30
@@ -39,12 +39,11 @@ public class Game {
     init(){
         GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "map1600x1600"))), xSize:25, ySize:25)
 
-        
         SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
         SelectedTile.zPosition = 2
         SelectedTile.position = GameMap.findTile(tileX:1,tileY:1).Location
         
-        ProgressBar = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
+        ProgressBar = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "greenHighlight")))
         ProgressBar.position = CGPoint(x: 0, y: 180)
         ProgressBar.scale(to: CGSize(width: 350, height: 65))
         ProgressBar.zPosition = 4
@@ -102,6 +101,13 @@ public class Game {
     }
     
     func Update() {
+        if Player.Health <= 0 {
+            if !HasDied {
+
+                HasDied = true
+            }
+            return;
+        }
         //Run the gui actions
         for act in Actions{
             SelectedTile.run(act)
