@@ -68,6 +68,7 @@ public class Entity {
         }
         
         TitleText = (IsEnemy ? "Enemy" : "Player") + " \(Health) / \(Max_Health)"
+        Title.text = TitleText
         Title.position = CGPoint(x: Sprite.position.x, y: Sprite.position.y + 40)
     }
 
