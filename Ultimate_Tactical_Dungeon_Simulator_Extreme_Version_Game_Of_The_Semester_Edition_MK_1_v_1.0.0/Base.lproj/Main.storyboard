@@ -33,7 +33,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="84" y="690"/>
+            <point key="canvasLocation" x="84" y="798"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="B9e-rM-jDb">
