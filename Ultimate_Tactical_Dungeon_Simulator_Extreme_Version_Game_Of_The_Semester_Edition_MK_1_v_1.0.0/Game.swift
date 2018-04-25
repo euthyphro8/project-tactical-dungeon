@@ -13,6 +13,7 @@ import Darwin
 
 public class Game {
     
+    
     static let TILE_SIZE:CGFloat = 64
     
     var Entities = [Entity]()
