@@ -42,7 +42,7 @@ public class Entity {
         Defense = 10
         Actions = [SKAction]()
         IsEnemy = enemy
-        Agility = IsEnemy ? 60 : 80
+        Agility = IsEnemy ? 60 : 90
 
         Atlas = atlas
         Sprite = sprite
