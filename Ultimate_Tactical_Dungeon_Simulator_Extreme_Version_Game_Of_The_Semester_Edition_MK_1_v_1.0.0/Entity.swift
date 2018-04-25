@@ -53,7 +53,7 @@ public class Entity {
         TitleText = (IsEnemy ? "Enemy" : "Player") + " \(Health) / \(Max_Health)"
         Title = SKLabelNode(text: TitleText)
         Title.fontSize = 20
-        Title.color = SKColor.black
+        Title.fontColor = SKColor.black
         Title.position = CGPoint(x: x, y: y + 40)
         Title.zPosition = 3
     }
@@ -122,7 +122,7 @@ public class Entity {
             else {
                 return (dmg: dmg, newPos: CGPoint(x: 0, y: 0))
             }
-            return dmg
+            return (dmg: dmg, newPos: CGPoint(x: 0, y: 0))
         }
         if y <= x || y < 2 {
             if xx < 0 {

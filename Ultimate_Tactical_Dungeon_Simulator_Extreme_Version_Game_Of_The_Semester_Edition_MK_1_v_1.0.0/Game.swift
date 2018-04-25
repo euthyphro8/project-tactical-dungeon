@@ -27,6 +27,8 @@ public class Game {
     let SwordTexture:SKTexture;
     let BowTexture:SKTexture;
     let ConsoleLabel:SKLabelNode;
+    let YouDied:SKSpriteNode;
+    let BlackBar:SKSpriteNode;
 
     //False for melee, true for ranged
     var AttackMode:Bool = false;
@@ -66,6 +68,12 @@ public class Game {
         AttackButton.position = CGPoint(x: 300, y: -150)
         AttackButton.scale(to: CGSize(width: 64, height: 64))
         AttackButton.zPosition = 5
+        
+        YouDied = SKSpriteNode(texture: SKTexture(image:#imageLiteral(resourceName: "uded")))
+        YouDied.scale(to: CGSize(width:500,height:100))
+        YouDied.zPosition = 10
+        
+        
 
         //Player
         let pTile = GameMap.findTile(tileX: 1, tileY: 1);
