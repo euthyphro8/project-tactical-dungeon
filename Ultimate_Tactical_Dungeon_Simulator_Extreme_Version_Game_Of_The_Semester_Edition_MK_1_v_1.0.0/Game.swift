@@ -13,9 +13,9 @@ import Darwin
 
 public class Game {
     
-    
     static let TILE_SIZE:CGFloat = 64
-    
+
+    var DeathAudio:AVAudioPlayer?;
     var Entities = [Entity]()
     let Player:Entity;
     let GameMap:Map;
@@ -37,6 +37,9 @@ public class Game {
     var DelayTimer = 30
     
     init(){
+        var deathPath = NSURL(fileURLWithPath:NSBundle.mainBundle().pathForResource("you_ded", ofType: "mp3")!)
+        DeathAudio = try? AVAudioPlayer(contentsOfURL: deathPath)
+
         GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "map1600x1600"))), xSize:25, ySize:25)
 
         SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
@@ -103,6 +106,7 @@ public class Game {
     func Update() {
         if Player.Health <= 0 {
             if !HasDied {
+                DeathAudio?.PrepareToPlay()
 
                 HasDied = true
             }
