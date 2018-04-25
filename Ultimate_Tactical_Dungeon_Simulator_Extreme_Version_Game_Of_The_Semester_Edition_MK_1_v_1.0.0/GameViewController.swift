@@ -13,6 +13,12 @@ import GameplayKit
 class GameViewController: UIViewController {
     
     
+    @IBOutlet weak var gearButtonMenu: UIView!
+    @IBAction func gearButtonTapped(_ sender: Any) {
+        gearButtonMenu.isHidden = !gearButtonMenu.isHidden
+    }
+    @IBOutlet weak var mainMenuButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
