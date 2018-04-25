@@ -10,6 +10,7 @@ import Foundation
 import SpriteKit
 import GameplayKit
 import Darwin
+import AVFoundation
 
 public class Game {
     
@@ -37,11 +38,11 @@ public class Game {
     var IsPlayerTurn: Bool
     let DelayTime = 30
     var DelayTimer = 30
+    var Scene:SKScene?;
     
     init(){
-        var deathPath = NSURL(fileURLWithPath:NSBundle.mainBundle().pathForResource("you_ded", ofType: "mp3")!)
-        DeathAudio = try? AVAudioPlayer(contentsOfURL: deathPath)
-
+        //let deathPath = URL(fileURLWithPath:(forResource: "you_ded", ofType: "mp3")!)
+        //DeathAudio = try? AVAudioPlayer(contentsOf: deathPath)
         GameMap = Map(background:SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "map1600x1600"))), xSize:25, ySize:25)
 
         SelectedTile = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "redHighlight")))
@@ -58,11 +59,12 @@ public class Game {
         TurnLabel.fontColor = SKColor.black
         TurnLabel.position = CGPoint(x: 0, y: 160)
         TurnLabel.zPosition = 5
+        TurnLabel.fontName = "Marion-Bold"
 
         ConsoleLabel = SKLabelNode(text: "Game initialized")
-        ConsoleLabel.fontSize = 35
+        ConsoleLabel.fontSize = 28
         ConsoleLabel.fontColor = SKColor.black
-        ConsoleLabel.position = CGPoint(x: -300, y: -150)
+        ConsoleLabel.position = CGPoint(x: -200, y: -200)
         ConsoleLabel.zPosition = 4
 
         BowTexture = SKTexture(image: #imageLiteral(resourceName: "bow_button"))
@@ -73,8 +75,13 @@ public class Game {
         AttackButton.zPosition = 5
         
         YouDied = SKSpriteNode(texture: SKTexture(image:#imageLiteral(resourceName: "uded")))
-        YouDied.scale(to: CGSize(width:500,height:100))
+        YouDied.scale(to: CGSize(width:250,height:100))
         YouDied.zPosition = 10
+        YouDied.run(SKAction.fadeOut(withDuration: 0))
+        BlackBar = SKSpriteNode(texture: SKTexture(image:#imageLiteral(resourceName: "bb")))
+        BlackBar.scale(to: CGSize(width:900,height:150))
+        BlackBar.zPosition = 9
+        BlackBar.run(SKAction.fadeOut(withDuration: 0))
         
         
 
@@ -109,16 +116,17 @@ public class Game {
         GameScene.addChild(ProgressBar)
         GameScene.addChild(AttackButton)
         GameScene.addChild(ConsoleLabel)
+        GameScene.addChild(YouDied)
+        GameScene.addChild(BlackBar)
+        Scene = GameScene
     }
     
     func Update() {
-        if Player.Health <= 0 {
-            if !HasDied {
-                DeathAudio?.PrepareToPlay()
-
-                HasDied = true
-            }
-            return;
+        if HasDied{
+            return
+        }
+        if Player.Health <= 0{
+            HasDied = true
         }
         //Run the gui actions
         for act in Actions{
@@ -140,6 +148,13 @@ public class Game {
                 IsPlayerTurn = true
             }
         }
+        if HasDied {
+            Scene?.run(SKAction.playSoundFileNamed("you_ded.mp3", waitForCompletion: false))
+            YouDied.run(SKAction.fadeIn(withDuration: 5))
+            BlackBar.run(SKAction.fadeIn(withDuration: 5))
+            
+        }
+        
     }
 
     func Move_Selection(to: CGPoint) {

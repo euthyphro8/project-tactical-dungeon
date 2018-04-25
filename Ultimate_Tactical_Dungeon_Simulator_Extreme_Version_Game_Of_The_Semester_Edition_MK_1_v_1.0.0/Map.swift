@@ -19,7 +19,7 @@ class Map{
     
     init(background:SKSpriteNode, xSize:Int, ySize:Int){
         Background = background
-        background.position = CGPoint(x: 0, y: 0)
+        background.position = CGPoint(x: -400, y: 500)
         background.zPosition = 0
         XSize = xSize
         YSize = ySize

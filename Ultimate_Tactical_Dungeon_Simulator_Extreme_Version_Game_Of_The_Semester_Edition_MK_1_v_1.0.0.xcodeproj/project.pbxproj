@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EEFFD772090525500218993 /* you_ded.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0EEFFD762090525500218993 /* you_ded.mp3 */; };
+		0EEFFD792090525E00218993 /* you_ded.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0EEFFD782090525D00218993 /* you_ded.mp3 */; };
 		9F015126202DFD6100419F05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F015125202DFD6100419F05 /* AppDelegate.swift */; };
 		9F015128202DFD6100419F05 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F015127202DFD6100419F05 /* GameScene.sks */; };
 		9F01512A202DFD6100419F05 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9F015129202DFD6100419F05 /* Actions.sks */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0EEFFD762090525500218993 /* you_ded.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = you_ded.mp3; sourceTree = "<group>"; };
+		0EEFFD782090525D00218993 /* you_ded.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = you_ded.mp3; sourceTree = SOURCE_ROOT; };
 		9F015122202DFD6100419F05 /* Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F015125202DFD6100419F05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F015127202DFD6100419F05 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -52,6 +56,7 @@
 			children = (
 				9F015124202DFD6100419F05 /* Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0 */,
 				9F015123202DFD6100419F05 /* Products */,
+				0EEFFD762090525500218993 /* you_ded.mp3 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +71,7 @@
 		9F015124202DFD6100419F05 /* Ultimate_Tactical_Dungeon_Simulator_Extreme_Version_Game_Of_The_Semester_Edition_MK_1_v_1.0.0 */ = {
 			isa = PBXGroup;
 			children = (
+				0EEFFD782090525D00218993 /* you_ded.mp3 */,
 				9F5CDBF5203490E400D0F31B /* Entity.swift */,
 				9F015125202DFD6100419F05 /* AppDelegate.swift */,
 				9F015127202DFD6100419F05 /* GameScene.sks */,
@@ -145,6 +151,8 @@
 				9F015128202DFD6100419F05 /* GameScene.sks in Resources */,
 				9F015133202DFD6100419F05 /* Assets.xcassets in Resources */,
 				9F015136202DFD6100419F05 /* LaunchScreen.storyboard in Resources */,
+				0EEFFD772090525500218993 /* you_ded.mp3 in Resources */,
+				0EEFFD792090525E00218993 /* you_ded.mp3 in Resources */,
 				9F01512A202DFD6100419F05 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
